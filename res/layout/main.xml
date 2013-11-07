@@ -6,25 +6,52 @@
     >
     <TextView
         android:id="@+id/title"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="50sp"
+        android:textSize="70sp"
         android:text="Snuffer"
         />
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        >
     <Button
         android:id="@+id/snuff_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
+        android:layout_margin="10dp"
         android:text="Snuff!"
+        android:textSize="50sp"
         android:onClick="snuffTapped"
+        />
+    <Button
+        android:id="@+id/connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Connect"
+        android:textSize="50sp"
+        android:onClick="connectTapped"
+        />
+    </LinearLayout>
+    <ImageView
+          android:id="@+id/image"
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:layout_below="@id/buttons"
+          android:layout_centerHorizontal="true"
+          android:src="@drawable/flicker"
         />
     <TextView
         android:id="@+id/status"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_below="@id/snuff_button"
+        android:layout_below="@id/image"
+        android:layout_centerHorizontal="true"
         android:textSize="50sp"
         android:text="CHANGEME"
 

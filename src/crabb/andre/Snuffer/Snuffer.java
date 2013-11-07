@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.codebutler.android_websockets.WebSocketClient;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -75,6 +76,11 @@ public class Snuffer extends Activity {
     }
 
     //-------------------------------------------------------------------------
+    public void connectTapped(View view) {
+        mClient.disconnect();
+        mClient.connect();
+    }
+    //-------------------------------------------------------------------------
     public void snuffTapped(View view) {
         String mess = "";
         if (IGNITED_STATUS.equals(lastStatus)) {
@@ -88,32 +94,37 @@ public class Snuffer extends Activity {
             Log.d(TAG, String.format(">> Sending Message : %s", mess));
             mClient.send(mess);
         }
+        else {
+            Toast.makeText(getApplicationContext(), "Disconnected :(", Toast.LENGTH_LONG).show();
+        }
 //        mClient.disconnect();
     }
     //-------------------------------------------------------------------------
     private void updateStatusLabel() {
-        statusView.setText(lastStatus);
+        String stat = "";
+        if (IGNITED_STATUS.equals(lastStatus)) {
+            stat = "Ignited";
+        } else if (SNUFFED_STATUS.equals(lastStatus)) {
+            stat = "Snuffed";
+        } else if (SNUFFING_STATUS.equals(lastStatus)) {
+            stat = "Snuffing";
+        }
+        statusView.setText(stat);
     }
     //-------------------------------------------------------------------------
     private void handleMessage(String message) {
-        String mess = "";
         if (IGNITED_STATUS.equals(message)) {
             lastStatus = IGNITED_STATUS;
-            mess = "ignited";
         } else if (SNUFFED_STATUS.equals(message)) {
             lastStatus = SNUFFED_STATUS;
-            mess = "snuffed";
         } else if (SNUFFING_STATUS.equals(message)) {
             lastStatus = SNUFFING_STATUS;
-            mess = "snuffing";
         }
         runOnUiThread(new Runnable() {
             @Override
-            public void run() {
-                updateStatusLabel();
-            }
+            public void run() { updateStatusLabel(); }
         });
-        Log.d(TAG, String.format(">> Candle is %s.", mess));
+        Log.d(TAG, String.format(">> Candle is %s.", message));
     }
 
 }
